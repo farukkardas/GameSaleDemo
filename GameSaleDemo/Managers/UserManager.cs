@@ -23,7 +23,6 @@ namespace GameSaleDemo.Managers
         {
             users.Add(user);
             Console.WriteLine();
-            Console.WriteLine("Kullanıcı başarılı bir şekilde eklendi!");
             Console.WriteLine();
         }
 

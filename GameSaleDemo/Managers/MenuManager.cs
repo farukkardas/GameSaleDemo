@@ -16,7 +16,7 @@ namespace GameSaleDemo.Managers
             IUserDal userDal = new UserManager();
             IGameDal gameDal = new GameManager();
             ICampaignDal campaignDal = new CampaignManager();
-            
+            IVerificationService verificationService = new ValidationManager();
            
             
             
@@ -52,8 +52,15 @@ namespace GameSaleDemo.Managers
                     int birthYear = Int32.Parse(Console.ReadLine());
                     Console.Write("Kullanıcı Bakiyesi: ");
                     decimal balance = Convert.ToDecimal(Console.ReadLine());
+                    
+                    
 
                     userDal.Add(new User() { Name = name, LastName = lastName, TcNo = tcNo, BirthYear = birthYear, Balance = balance });
+
+                    verificationService.Validation();
+
+
+
                 }
                 else if (choice == "7")
                 {
