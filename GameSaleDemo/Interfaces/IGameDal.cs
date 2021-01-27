@@ -11,6 +11,7 @@ namespace GameSaleDemo.Interfaces
         void Update();
         void List();
         void Delete();
-  
+        void BuyGame();
+
     }
 }

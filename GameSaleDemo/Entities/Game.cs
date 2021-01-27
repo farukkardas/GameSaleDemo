@@ -5,9 +5,9 @@ using GameSaleDemo.Interfaces;
 
 namespace GameSaleDemo.Entities
 {
-    class Game:IGame
+    public class Game:IGame
     {
-        public int GameId { get; set; }
+        public string GameId { get; set; }
         public string GameName { get; set; }
         public decimal Price { get; set; }
     }

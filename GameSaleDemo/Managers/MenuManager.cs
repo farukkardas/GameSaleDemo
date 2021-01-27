@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using GameSaleDemo.Entities;
 using GameSaleDemo.Interfaces;
 
 namespace GameSaleDemo.Managers
 {
-    public class MenuManager
+    public class MenuManager:IMenuService
     {
         public void MainMenu()
         {
@@ -14,6 +15,7 @@ namespace GameSaleDemo.Managers
             string choice = null;
             IUserDal userDal = new UserManager();
             IGameDal gameDal = new GameManager();
+            ICampaignDal campaignDal = new CampaignManager();
             
            
             
@@ -26,13 +28,13 @@ namespace GameSaleDemo.Managers
             while (_kontrol == true)
             {
                 Console.WriteLine();
-                Console.WriteLine("## Oyun İşlemleri ##        ## Hesap İşlemleri ##");
+                Console.WriteLine("## Oyun İşlemleri ##        ## Hesap İşlemleri ##             ## Kampanya İşlemleri ##");
                 Console.WriteLine();
-                Console.WriteLine("1.Oyun Ekle                   6.Oyuncu Ekle");
-                Console.WriteLine("2.Oyun Sil                    7.Oyuncu Sil");
-                Console.WriteLine("3.Oyun Listele                8.Oyuncu Listele");
-                Console.WriteLine("4.Oyun Güncele                9.Oyuncu Güncelle");
-                Console.WriteLine("5.Oyun Satın Al                                    ");
+                Console.WriteLine("1.Oyun Ekle                   6.Oyuncu Ekle                      A.Kampanya Ekle                   ");
+                Console.WriteLine("2.Oyun Sil                    7.Oyuncu Sil                       B.Kampanya Sil                       ");
+                Console.WriteLine("3.Oyun Listele                8.Oyuncu Listele                   C.Kampanya Listele                    ");
+                Console.WriteLine("4.Oyun Güncele                9.Oyuncu Güncelle                  D.Kampanya Güncelle                   ");
+                Console.WriteLine("5.Oyun Satın Al");
                 Console.WriteLine();
                 Console.Write("## Seçiminiz: ");
                 choice = Console.ReadLine();
@@ -71,7 +73,7 @@ namespace GameSaleDemo.Managers
                 else if (choice == "1")
                 {
                     Console.Write("Oyunun ID'si (Sayısal): ");
-                    int gameId = Convert.ToInt32(Console.ReadLine());
+                    string gameId = Console.ReadLine();     
                     Console.Write("Oyunun Adı: ");
                     string gameName = Console.ReadLine();
                     Console.Write("Oyunun fiyatı: ");
@@ -92,12 +94,36 @@ namespace GameSaleDemo.Managers
                     gameDal.Update();
                 }
                 else if (choice == "5")
-                { 
+                {
+                
+                    gameDal.BuyGame();
                     
-                    
-
-
                 }
+
+                else if (choice == "A")
+                {
+                    Console.Write("Kampanya ID (Sayısal): ");
+                    string newCampaignId = Console.ReadLine();
+                    Console.Write("Kampanya Adı: ");
+                    string newCampaignName = Console.ReadLine();
+                    Console.Write("İndirim miktarı: ");
+                    decimal newDiscount = Convert.ToDecimal(Console.ReadLine());
+
+                    campaignDal.Add(new Campaign() {CampaignId = newCampaignId,CampaignName = newCampaignName,Discount = newDiscount});
+                }
+                else if (choice == "B")
+                {
+                    campaignDal.Delete();
+                }
+                else if (choice == "C")
+                {
+                    campaignDal.List();
+                }
+                else if (choice == "D")
+                {
+                    campaignDal.Update();
+                }
+
                 else
                 {
                     Console.WriteLine();

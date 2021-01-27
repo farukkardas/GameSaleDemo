@@ -5,14 +5,11 @@ using GameSaleDemo.Entities;
 
 namespace GameSaleDemo.Interfaces
 {
-    public interface IUserDal
+    interface ICampaignDal
     {
-        void Add(User user);
-        void Delete();
+        void Add(Campaign campaign);
         void Update();
+        void Delete();
         void List();
-
-        List<User> getList();
-
     }
 }

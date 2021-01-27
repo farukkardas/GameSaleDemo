@@ -6,13 +6,13 @@ using GameSaleDemo.Interfaces;
 
 namespace GameSaleDemo.Managers
 {
-    class GameManager:IGameDal
+    public class GameManager:IGameDal
     {
         private IUserDal gameUserDal = new UserManager();
-
-        int _choice;
+        
+        string _choice;
         bool _kontrol = true;
-        private List<Game> games = new List<Game>() { };
+         public List<Game> games = new List<Game>() { };
         public void Add(Game game)
         {
             games.Add(game);
@@ -28,7 +28,7 @@ namespace GameSaleDemo.Managers
             {
 
                 Console.Write("Değişmek istediğiniz oyunun TC Nosunu giriniz: ");
-                _choice = Convert.ToInt32(Console.ReadLine());
+                _choice = Console.ReadLine();
 
                 if (games.Count > 0)
                 {
@@ -114,7 +114,7 @@ namespace GameSaleDemo.Managers
             {
 
                 Console.Write("Silmek istediğiniz oyunun ID'sini giriniz: ");
-                _choice = Convert.ToInt32(Console.ReadLine());
+                _choice = Console.ReadLine();
 
                 if (games.Count > 0)
                 {
@@ -159,6 +159,12 @@ namespace GameSaleDemo.Managers
             }
         }
 
-    
+        public void BuyGame()
+        {
+            foreach (var xUser in gameUserDal.getList())
+            {
+                Console.WriteLine(xUser.Name);
+            }
+        }
     }
 }
