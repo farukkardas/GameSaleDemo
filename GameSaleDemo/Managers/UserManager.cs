@@ -12,7 +12,7 @@ namespace GameSaleDemo.Managers
     {
         private bool _kontrol = true;
         private string _choice;
-        public List<User> users = new List<User>() { };
+        public static List<User> users = new List<User>() { };
 
         public List<User> getList()
         {

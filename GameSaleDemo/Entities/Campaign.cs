@@ -5,7 +5,7 @@ using GameSaleDemo.Interfaces;
 
 namespace GameSaleDemo.Entities
 {
-    class Campaign:ICampaign
+    public class Campaign:ICampaign
     {
         public string CampaignId { get; set; }
         public string CampaignName { get; set; }

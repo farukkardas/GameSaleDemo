@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Channels;
 using GameSaleDemo.Entities;
 using GameSaleDemo.Interfaces;
 
 namespace GameSaleDemo.Managers
 {
-    public class GameManager:IGameDal
+    public class GameManager : IGameDal
     {
         private IUserDal gameUserDal = new UserManager();
-        
+
         string _choice;
         bool _kontrol = true;
-         public List<Game> games = new List<Game>() { };
+        public static List<Game> games = new List<Game>() { };
         public void Add(Game game)
         {
             games.Add(game);
@@ -23,7 +24,7 @@ namespace GameSaleDemo.Managers
 
         public void Update()
         {
-        
+
             while (_kontrol == true)
             {
 
@@ -46,7 +47,7 @@ namespace GameSaleDemo.Managers
 
                             xUser.Price = newPrice;
                             xUser.GameName = newGameName;
-                  
+
                             Console.WriteLine();
                             Console.WriteLine("Oyunun bilgileri başarı bir şekilde güncellendi!");
                             Console.WriteLine();
@@ -109,7 +110,7 @@ namespace GameSaleDemo.Managers
 
         public void Delete()
         {
-            
+
             while (_kontrol == true)
             {
 
@@ -161,9 +162,57 @@ namespace GameSaleDemo.Managers
 
         public void BuyGame()
         {
-            foreach (var xUser in gameUserDal.getList())
+            string _tcInput;
+            if (games.Count > 0 && gameUserDal.getList().Count > 0)
             {
-                Console.WriteLine(xUser.Name);
+                while (_kontrol == true)
+                {
+                    Console.Write("Kullanıcının TC'sini giriniz: ");
+                    _tcInput = Console.ReadLine();
+                    foreach (var xUser in gameUserDal.getList())
+                    {
+                        if (xUser.TcNo == _tcInput)
+                        {
+                            Console.Write("Oyunun ID'sini giriniz:");
+                            _choice = Console.ReadLine();
+                            foreach (var xGame in games)
+                            {
+                                if (xGame.GameId == _choice)
+                                {
+                                    var result = xUser.Balance - xGame.Price;
+                                    xUser.Balance = result;
+                                    Console.WriteLine("TEBRİKLER OYUNU SATIN ALDINIZ {0}",xGame.GameName);
+                                    Console.WriteLine("Yeni bakiyeniz {0}", xUser.Balance);
+                                    _kontrol = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Oyun bulunamadı!");
+                                    break;
+                                }
+                            }
+
+                            
+                        }
+                        break;
+
+
+                        //else
+                        //{
+                        //    Console.WriteLine("TCNo bulunamadı!");
+                        //    break;
+
+                        //}
+                    }
+
+
+                }
+
+            }
+
+            else
+            {
+                Console.WriteLine("Oyun veya kayıt bulunamadı!");
             }
         }
     }
